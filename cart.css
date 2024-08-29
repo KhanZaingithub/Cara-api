@@ -1,0 +1,83 @@
+@import url(shop.css);
+.bg {
+  background: linear-gradient(0deg, rgb(10 10 10 / 30%), rgba(10, 10, 10, 0.3)),
+    url(images/About/banner.png);
+  background-position: right;
+}
+thead tr {
+  border-bottom: 1px solid #d0d0d0;
+  border-top: 1px solid #d0d0d0;
+  color: #088178;
+}
+thead tr th {
+  color: #088178 !important;
+}
+i {
+  color: #088178;
+}
+table {
+  text-align: center;
+}
+tr img {
+  width: 35%;
+}
+tbody tr {
+  transition: all 3s ease;
+}
+tbody tr > * {
+  align-content: center;
+}
+tbody p {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin: 0px;
+}
+tbody td input {
+  text-align: center;
+  width: 50%;
+}
+.container .margin {
+  margin-bottom: 50px;
+}
+#coupon input {
+  border: 1px solid;
+  outline: none;
+  box-shadow: none;
+  border-radius: 5px;
+  margin-right: 0px;
+  width: 20rem;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  padding-left: 10px;
+}
+#coupon p {
+  margin: 0px;
+  padding: 10px 0px;
+  font-size: 2rem;
+}
+#coupon button {
+  margin-left: -4rem;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  background-color: #076861;
+  color: #ffffff;
+}
+#total {
+  padding: 15px;
+}
+#total p {
+  margin: 0px;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+#total tbody tr {
+  text-align: left;
+}
+#total button {
+  width: fit-content;
+  color: #ffffff;
+  background-color: #088178;
+}
