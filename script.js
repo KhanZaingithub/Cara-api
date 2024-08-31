@@ -3,7 +3,6 @@ async function products() {
   let response = await a.text();
   const data = JSON.parse(response);
   let product = document.querySelector("#products .row");
-  console.log(data[0])
   for (let i = 0; i < data.length / 2; i++) {
     product.innerHTML =
       product.innerHTML +
@@ -23,7 +22,7 @@ async function products() {
               <h4 id="price">$${data[i].price}</h4>
             </div>
           </div>
-        </div>`
+        </div>`;
   }
 
   let product_1 = document.querySelector("#products-1 .row");
@@ -52,18 +51,18 @@ async function products() {
 products();
 
 async function loginCeck() {
-  let a = await fetch("cara/login/login.json");
-  let response = await a.text();
-  const data = JSON.parse(response);
   let loginDiv = document.querySelector(".navbar .login");
   let profileDiv = document.querySelector(".navbar .profile");
   let profileName = document.getElementById("profile-name");
   let index = localStorage.getItem("index");
-  
+  let a = await fetch(`https://fakestoreapi.com/users?limit=${index + 1}`);
+  let response = await a.text();
+  const data = JSON.parse(response);
+
   if (index != null) {
     loginDiv.style.display = "none";
     profileDiv.style.display = "flex";
-    profileName.textContent = data[index].name;
+    profileName.textContent = data[index].name.firstname;
   } else {
     loginDiv.style.display = "block";
     profileDiv.style.display = "none";
@@ -79,4 +78,3 @@ function Logout() {
 }
 
 loginCeck();
-

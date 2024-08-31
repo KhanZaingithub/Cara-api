@@ -15,7 +15,6 @@ async function product_click() {
   });
 }
 
-
 async function filter() {
   let filter_btn = document.querySelectorAll(".filter .category button");
   let category;
@@ -28,11 +27,10 @@ async function filter() {
         }
       }
       element.classList.add("active");
-      if(category == "All Products"){
+      if (category == "All Products") {
         category = "";
-      }
-      else{
-        category = `/category/${category}`
+      } else {
+        category = `/category/${category}`;
       }
       products(category);
       search(category);
@@ -40,19 +38,17 @@ async function filter() {
   });
 }
 
-
-async function products(category="/") {
-
+async function products(category = "/") {
   let a = await fetch(`https://fakestoreapi.com/products${category}`);
   let response = await a.text();
   const data = JSON.parse(response);
   let product = document.querySelector("#products .row");
   product.innerHTML = "";
- 
+
   for (let i = 0; i < data.length; i++) {
     product.innerHTML =
-    product.innerHTML +
-    `<div class="col-12 col-lg-3 col-md-4 js-product">
+      product.innerHTML +
+      `<div class="col-12 col-lg-3 col-md-4 js-product">
       <div class="card">
           <div style="height:350px">
              <img src="${data[i].image}" class=" img-fluid h-100 card-img-top" alt="..." />
@@ -79,7 +75,7 @@ async function search(category) {
   let no_data = document.querySelector("#products .no-data");
   let btn = document.querySelector(".buttons");
 
-  if(category != undefined){
+  if (category != undefined) {
     submit.addEventListener("click", async (e) => {
       e.preventDefault();
       let check = false;
@@ -88,7 +84,7 @@ async function search(category) {
       const data = JSON.parse(response);
       let product = document.querySelector("#products .row");
       product.innerHTML = "";
-  
+
       for (let i = 0; i < data.length; i++) {
         if (
           data[i].title.toLowerCase().includes(input.value.toLowerCase()) ||
@@ -124,24 +120,24 @@ async function search(category) {
         btn.style.display = "none";
       }
     });
-    }
-  
- product_click();
+  }
+
+  product_click();
 }
 
 async function loginCeck() {
-  let a = await fetch("cara/login/login.json");
+  let index = localStorage.getItem("index");
+  let a = await fetch(`https://fakestoreapi.com/users?limit=${index + 1}`);
   let response = await a.text();
   const data = JSON.parse(response);
   let loginDiv = document.querySelector(".navbar .login");
   let profileDiv = document.querySelector(".navbar .profile");
   let profileName = document.getElementById("profile-name");
-  let index = localStorage.getItem("index");
-  
+
   if (index != null) {
     loginDiv.style.display = "none";
     profileDiv.style.display = "flex";
-    profileName.textContent = data[index].name;
+    profileName.textContent = data[index].name.firstname;
   } else {
     loginDiv.style.display = "block";
     profileDiv.style.display = "none";

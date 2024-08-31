@@ -1,17 +1,16 @@
 async function loginCeck() {
-  let a = await fetch("cara/login/login.json");
+  let index = localStorage.getItem("index");
+  let a = await fetch(`https://fakestoreapi.com/users?limit=${index + 1}`);
   let response = await a.text();
   const data = JSON.parse(response);
   let loginDiv = document.querySelector(".navbar .login");
   let profileDiv = document.querySelector(".navbar .profile");
   let profileName = document.getElementById("profile-name");
-  let index = localStorage.getItem("index");
 
   if (index != null) {
-    console.log(loginDiv);
     loginDiv.style.display = "none";
     profileDiv.style.display = "flex";
-    profileName.textContent = data[index].name;
+    profileName.textContent = data[index].name.firstname;
   } else {
     loginDiv.style.display = "block";
     profileDiv.style.display = "none";
