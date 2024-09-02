@@ -2,12 +2,13 @@
   let loader = document.querySelector(".dot-spinner");
   let table = document.querySelectorAll(".js-table");
   let cart_details = document.getElementById("cart-js");
+  let product_id;
   let index = localStorage.getItem("index");
   let a = await fetch(`https://fakestoreapi.com/carts/user/${index + 1}`);
   let response = await a.text();
   let data = JSON.parse(response);
   let arr =[];
-
+  let idCount = 0;
   for (let i = 0; i < data.length; i++) {
     for (let j = 0; j < data[i].products.length; j++) {
       let b = await fetch(
@@ -21,10 +22,8 @@
         let element = cart_details.firstElementChild
        for(let i = 0; i<data[0].products.length;i++){
         if(element.id == data_1.id){
-          
           element.lastElementChild.firstElementChild.textContent = data_1.price * total_quantity;
           element.lastElementChild.previousElementSibling.firstElementChild.setAttribute("value",total_quantity);
-          
         }
         element = element.nextElementSibling;
        }
@@ -51,14 +50,14 @@
         <td>
           <input value="${
             data[i].products[j].quantity
-          }" id="0" class="quantity" type="text" />
+          }" id="${idCount}" class="quantity" type="text" />
         </td>
         <td>$<span class="rate">${
           data[i].products[j].quantity * data_1.price
         }</span></td>
       </tr>`;
       arr.push(data_1.id);
-
+      idCount++;
     }
   }
   loader.style.display = "none";
@@ -90,19 +89,21 @@
     return subtotal.toFixed(2);
   }
 
+  console.log(cart_quantity)
   cart_quantity.forEach((event) => {
     event.addEventListener("input", () => {
-      index = event.id;
-      let rateproduct = Number(price[index].textContent);
+      product_id = event.id;
+      let rateproduct = Number(price[product_id].textContent);
       if (event.value == 1 || event.value == "") {
-        subtotalRate[index].textContent = rateproduct;
+        subtotalRate[product_id].textContent = rateproduct;
         subtotal = subtotalF();
         cartTotal.textContent = subtotal;
       } else {
-        subtotalRate[index].textContent = rateproduct * event.value;
+        subtotalRate[product_id].textContent = rateproduct * event.value;
         subtotal = subtotalF();
         cartTotal.textContent = subtotal;
       }
+      finalTotal.textContent = subtotal;
     });
   });
 
