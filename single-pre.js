@@ -5,7 +5,9 @@ let description = document.getElementById("js-desc");
 let title = document.getElementById("js-title");
 const urlParams = new URLSearchParams(window.location.search);
 
-bigImage.src = urlParams.get("lat");
+
+let image_url = urlParams.get("lat").replaceAll(" ","+");
+bigImage.src = image_url;
 price.textContent = urlParams.get("price");
 description.textContent = urlParams.get("desc");
 title.textContent = urlParams.get("title");

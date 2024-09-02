@@ -1,14 +1,15 @@
 async function product_click() {
   let product = document.querySelectorAll(".js-product");
+  let cart = document.querySelectorAll(".js-card")
   product.forEach((e) => {
     e.addEventListener("click", () => {
-      let tiitle = e.querySelector(".card .card-body .card-title").textContent;
-      let details = e
+      let index = e.parentElement.parentElement.id - 1;
+      let tiitle = cart[index].querySelector(".card .card-body .card-title").textContent;
+      let details = cart[index]
         .querySelector(".card .card-body .card-text")
         .textContent.trim();
-      let price = e.querySelector(".card .card-body #price").textContent;
-      let imageP = e.querySelector(".card img").src;
-
+      let price = cart[index].querySelector(".card .card-body #price").textContent;
+      let imageP = cart[index].querySelector(".card img").src;
       let srcNext = `single-product.html?lat=${imageP}&price=${price}&desc=${details}&title=${tiitle}`;
       window.location.href = srcNext;
     });
@@ -48,10 +49,10 @@ async function products(category = "/") {
   for (let i = 0; i < data.length; i++) {
     product.innerHTML =
       product.innerHTML +
-      `<div class="col-12 col-lg-3 col-md-4 js-product">
-      <div class="card">
+      `<div class="col-12 col-lg-3 col-md-4 js-card">
+      <div class="card" id="${data[i].id}">
           <div style="height:350px">
-             <img src="${data[i].image}" class=" img-fluid h-100 card-img-top" alt="..." />
+             <img src="${data[i].image}" class=" img-fluid h-100 card-img-top js-image js-product" alt="..." />
           </div>
         <div class="card-body">
           <h5 class="card-title">${data[i].title}</h5>

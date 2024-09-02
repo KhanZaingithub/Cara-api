@@ -66,6 +66,9 @@
 #products .no-data {
   display: none;
 }
+.js-product{
+  cursor: pointer;
+}
 @media only screen and (max-width: 600px) {
   .filter button {
     margin: 5px 2px !important;

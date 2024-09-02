@@ -106,7 +106,6 @@
       finalTotal.textContent = subtotal;
     });
   });
-
   subtotal = subtotalF();
   cartTotal.textContent = subtotal;
   finalTotal.textContent = subtotal;
