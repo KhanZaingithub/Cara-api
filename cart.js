@@ -3,11 +3,11 @@
   let table = document.querySelectorAll(".js-table");
   let cart_details = document.getElementById("cart-js");
   let index = localStorage.getItem("index");
-  console.log(index);
   let a = await fetch(`https://fakestoreapi.com/carts/user/${index + 1}`);
   let response = await a.text();
   let data = JSON.parse(response);
-  console.log(data);
+  let arr =[];
+
   for (let i = 0; i < data.length; i++) {
     for (let j = 0; j < data[i].products.length; j++) {
       let b = await fetch(
@@ -15,9 +15,24 @@
       );
       let response_1 = await b.text();
       let data_1 = JSON.parse(response_1);
+
+      if(arr.includes(data_1.id)){
+        let total_quantity = data[i-1].products[data_1.id-1].quantity + data[i].products[j].quantity;
+        let element = cart_details.firstElementChild
+       for(let i = 0; i<data[0].products.length;i++){
+        if(element.id == data_1.id){
+          
+          element.lastElementChild.firstElementChild.textContent = data_1.price * total_quantity;
+          element.lastElementChild.previousElementSibling.firstElementChild.setAttribute("value",total_quantity);
+          
+        }
+        element = element.nextElementSibling;
+       }
+       continue;
+      }
       cart_details.innerHTML =
         cart_details.innerHTML +
-        `<tr>
+        `<tr id="${data_1.id}">
         <th class="delete"><i class="bi bi-x-circle"></i></th>
         <td>
           <div style="height:100px">
@@ -42,23 +57,22 @@
           data[i].products[j].quantity * data_1.price
         }</span></td>
       </tr>`;
+      arr.push(data_1.id);
+
     }
   }
   loader.style.display = "none";
   table.forEach((event) => {
     event.style.display = "block";
   });
-  // cart_details.addEventListener("load", () => {
-  //   console.log("load");
-  // });
-  let cart_quantity = document.querySelectorAll(".quantity");
+  
   let subtotalRate = document.querySelectorAll(".rate");
   let price = document.querySelectorAll(".originalrate");
   let deleteBtn = document.querySelectorAll(".delete");
   let cartTotal = document.querySelector("#total .subtotal");
   let finalTotal = document.querySelector("#total .total");
   let subtotal = 0;
-
+  let cart_quantity = document.querySelectorAll(".quantity");
   deleteBtn.forEach((event) => {
     event.addEventListener("click", () => {
       event.parentElement.remove();
