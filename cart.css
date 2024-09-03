@@ -177,6 +177,26 @@ tbody td input {
   animation-delay: calc(var(--uib-speed) * -0.125);
 }
 
+.err-image{
+  display: flex;
+  justify-content: center;
+  height: 10rem;
+}
+#error-msg{
+  display: none;
+}
+.swal2-actions button{
+  background-color: #088178;
+}
+div:where(.swal2-icon).swal2-error{
+  border-color: #088178 !important;
+}
+div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line]{
+  background-color: #088178 !important;
+}
+div:where(.swal2-container) h2:where(.swal2-title){
+  font-size: 20px !important;
+}
 @keyframes pulse0112 {
   0%,
   100% {

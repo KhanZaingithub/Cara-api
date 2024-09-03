@@ -4,18 +4,35 @@
   let cart_details = document.getElementById("cart-js");
   let product_id;
   let index = localStorage.getItem("index");
-  let a = await fetch(`https://fakestoreapi.com/carts/user/${index + 1}`);
-  let response = await a.text();
-  let data = JSON.parse(response);
+  let data;
+  let error_msg = document.getElementById("error-msg")
+  try {
+    let a = await fetch(`https://fakestoreapi.com/carts/user/${index + 1}`);
+    let response = await a.text();
+    data = JSON.parse(response);
+  } catch(err) {
+    // catches errors both in fetch and response.json
+    loader.style.display = "none"
+    error_msg.style.display = "block"
+  }
   let arr =[];
   let idCount = 0;
   for (let i = 0; i < data.length; i++) {
     for (let j = 0; j < data[i].products.length; j++) {
-      let b = await fetch(
-        `https://fakestoreapi.com/products/${data[i].products[j].productId}`
-      );
-      let response_1 = await b.text();
-      let data_1 = JSON.parse(response_1);
+      let data_1
+      try {
+        let b = await fetch(
+          `https://fakestoreapi.com/products/${data[i].products[j].productId}`
+        );
+        let response_1 = await b.text();
+        data_1 = JSON.parse(response_1);
+      } catch(err) {
+        // catches errors both in fetch and response.json
+        loader.style.display = "none"
+        error_msg.style.display = "block"
+      }
+     
+      
 
       if(arr.includes(data_1.id)){
         let total_quantity = data[i-1].products[data_1.id-1].quantity + data[i].products[j].quantity;
@@ -88,8 +105,6 @@
     });
     return subtotal.toFixed(2);
   }
-
-  console.log(cart_quantity)
   cart_quantity.forEach((event) => {
     event.addEventListener("input", () => {
       product_id = event.id;
@@ -109,4 +124,32 @@
   subtotal = subtotalF();
   cartTotal.textContent = subtotal;
   finalTotal.textContent = subtotal;
+  proceedCheckout();
 })();
+
+
+function proceedCheckout(){
+  let proceed = document.getElementById("js-proceed");
+  proceed.addEventListener("click",()=>{
+    Swal.fire({
+      title: "Sorry! This time can't proceed",
+      icon: "error",
+      confirmButtonText: "OK",
+      showClass: {
+        popup: `
+          animate__animated
+          animate__fadeInUp
+          animate__faster
+        `
+      },
+      hideClass: {
+        popup: `
+          animate__animated
+          animate__fadeOutDown
+          animate__faster
+        `
+      }
+    });
+  })
+}
+
